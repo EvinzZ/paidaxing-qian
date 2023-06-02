@@ -106,20 +106,27 @@ export const constantRoutes = [
                 path: '/mysql',
                 component: () => import('@/views/mysqls/index'),
                 name: 'Mysql',
-                meta: {title: 'MySQL', icon: 'dashboard', affix: true}
+                meta: {title: 'MySQL', icon: 'code', affix: true, noCache: true }
             }
         ]
     },
     {
-        path: '',
+        path: '/pgsql',
         component: Layout,
-        redirect: '/pgsql',
+        redirect: 'noredirect',
+        meta: {title: 'PostgreSQL', icon: 'code', affix: true, noCache: true },
         children: [
             {
-                path: '/pgsql',
-                component: () => import('@/views/pgsqls/index'),
-                name: 'Pgsql',
-                meta: {title: 'PostgreSQL', icon: 'dashboard', affix: true}
+                path: 'genInsert',
+                component: () => import('@/views/pgsqls/genInsert/index'),
+                name: 'genInsert',
+                meta: {title: '生成Insert语句', icon: 'code', affix: true, noCache: true },
+            },
+            {
+                path: 'genEntity',
+                component: () => import('@/views/pgsqls/genEntity/index'),
+                name: 'genEntity',
+                meta: {title: '生成实体', icon: 'code', affix: true, noCache: true },
             }
         ]
     },

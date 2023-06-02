@@ -11,3 +11,15 @@ export function ddlGenInsertSql(data) {
         data: data
     })
 }
+
+// ddl语句生成实体
+export function ddlGenEntity(data) {
+    return request({
+        url: '/pgsql/ddlGenEntity',
+        method: 'post',
+        headers: {
+            isToken: false
+        },
+        data: data
+    })
+}
