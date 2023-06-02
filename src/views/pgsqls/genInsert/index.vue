@@ -27,7 +27,6 @@
               type="textarea"
               autosize
               readonly
-              placeholder="请输入SQL语句"
           />
         </el-form-item>
       </el-form>
@@ -36,7 +35,7 @@
 </template>
 
 <script setup>
-import {ddlGenInsertSql} from "@/api/pgsqls/ddlGenInsertSql";
+import {ddlGenInsertSql} from "@/api/pgsqls";
 
 const loading = ref(false);
 // do not use same name with ref
