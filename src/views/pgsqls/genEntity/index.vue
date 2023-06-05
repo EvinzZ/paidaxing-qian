@@ -10,10 +10,18 @@
       >
         <el-form-item label="生成类型" prop="opsClient">
           <el-select v-model="sqlForm.opsClient" placeholder="请选择生成类型">
-            <el-option label="Java" value="Java"/>
-            <el-option label="C++" value="Cpp"/>
-            <el-option label="Python" value="Python"/>
+            <el-option v-for="client in opsClientDict" :label="client" :value="client"/>
           </el-select>
+        </el-form-item>
+        <el-form-item label="Lomboks" prop="useLombok">
+          <el-switch
+              v-model="sqlForm.useLombok"
+              class="mt-2"
+              style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+              inline-prompt
+              :active-icon="Check"
+              :inactive-icon="Close"
+          />
         </el-form-item>
         <el-form-item label="SQL创建语句(DDL)">
           <div ref="ddlSqlEditorContainer" style="min-height: 300px; width: 100%"></div>
@@ -36,6 +44,8 @@ import {ddlGenEntity} from "@/api/pgsqls";
 import {onMounted, ref, toRaw} from "vue";
 import * as monaco from "monaco-editor";
 import {ElMessage} from 'element-plus'
+import {Check, Close} from '@element-plus/icons-vue'
+import {listDevLanOpsClient} from "@/api/dict";
 
 const codeContent = ref("");
 const ddlSqlEditorContainer = ref<any>(null);
@@ -44,24 +54,22 @@ const ddlSqlEditor = ref<any>(null);
 const resultEditor = ref<any>(null);
 const editorTheme = ref<string>("vs-dark");
 const loading = ref(false);
+const opsClientDict = ref<any>(null);
 // do not use same name with ref
 const sqlForm = ref({
   opsClient: 'Java',
+  useLombok: true
 })
 
 const onSubmit = () => {
   loading.value = true;
   const ddlSql = toRaw(ddlSqlEditor.value).getValue();
-  const opsClient = sqlForm.value.opsClient;
   const data = {
     'ddlSql': ddlSql,
-    'opsClient': opsClient,
+    'opsClient': sqlForm.value.opsClient,
+    'useLombok': sqlForm.value.useLombok,
   }
   ddlGenEntity(data).then(res => {
-    // ElMessage({
-    //   message: '生成成功',
-    //   type: 'success',
-    // })
     loading.value = false;
     toRaw(resultEditor.value).setValue(res.data)
   }).catch(() => {
@@ -70,9 +78,16 @@ const onSubmit = () => {
 }
 
 onMounted(() => {
+  listDevLanOpsClientHandler();
   ddlSqlEditorContainerInit();
   resultEditorContainerInit();
 });
+
+function listDevLanOpsClientHandler() {
+  listDevLanOpsClient().then(res => {
+    opsClientDict.value = res.data;
+  })
+}
 
 // 获取编辑框内容
 function getCodeContext() {
@@ -134,7 +149,7 @@ function resultEditorContainerInit() {
     accessibilitySupport: "off", // 辅助功能支持  "auto" | "off" | "on"
     lineNumbers: "on", // 行号 取值： "on" | "off" | "relative" | "interval" | function
     lineNumbersMinChars: 5, // 行号最小字符   number
-    readOnly: false, //是否只读  取值 true | false
+    readOnly: true, //是否只读  取值 true | false
   });
   // 监听内容变化
   resultEditor.value.onDidChangeModelContent((e) => {

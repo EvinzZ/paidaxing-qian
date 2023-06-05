@@ -4,8 +4,7 @@
       <el-form :model="genInsertSqlForm" label-width="140px">
         <el-form-item label="生成类型">
           <el-select v-model="genInsertSqlForm.opsClient" placeholder="请选择生成类型">
-            <el-option label="NamedParameterJdbcTemplate" value="NamedParameterJdbcTemplate"/>
-            <el-option label="Mybatis" value="Mybatis"/>
+            <el-option v-for="client in opsClientDict" :label="client" :value="client"/>
           </el-select>
         </el-form-item>
         <el-form-item label="SQL创建语句(DDL)">
@@ -27,11 +26,13 @@
 
 <script setup lang="ts">
 import {ddlGenInsertSql} from "@/api/pgsqls";
+import {listDaoOpsClient} from "@/api/dict";
 import {onMounted, ref, toRaw} from "vue";
 import * as monaco from "monaco-editor";
 import {ElMessage} from 'element-plus'
 
 const codeContent = ref("");
+const opsClientDict = ref<any>(null);
 const genInsertDdlSqlEditorContainer = ref<any>(null);
 const genInsertResultEditorContainer = ref<any>(null);
 const genInsertDdlSqlEditor = ref<any>(null);
@@ -52,11 +53,6 @@ const onSubmit = () => {
     'opsClient': opsClient,
   }
   ddlGenInsertSql(data).then(res => {
-    console.log(res);
-    ElMessage({
-      message: '生成成功',
-      type: 'success',
-    })
     loading.value = false;
     toRaw(genInsertResultEditor.value).setValue(res.data)
   }).catch(() => {
@@ -65,6 +61,7 @@ const onSubmit = () => {
 }
 
 onMounted(() => {
+  listDaoOpsClientHandle();
   ddlSqlEditorContainerInit();
   resultEditorContainerInit();
 });
@@ -78,6 +75,12 @@ function getCodeContext() {
 function cleanEditor() {
   toRaw(genInsertDdlSqlEditor.value).setValue('');
   toRaw(genInsertResultEditor.value).setValue('');
+}
+
+function listDaoOpsClientHandle() {
+  listDaoOpsClient().then(res => {
+    opsClientDict.value = res.data;
+  })
 }
 
 function ddlSqlEditorContainerInit() {
@@ -129,7 +132,7 @@ function resultEditorContainerInit() {
     accessibilitySupport: "off", // 辅助功能支持  "auto" | "off" | "on"
     lineNumbers: "on", // 行号 取值： "on" | "off" | "relative" | "interval" | function
     lineNumbersMinChars: 5, // 行号最小字符   number
-    readOnly: false, //是否只读  取值 true | false
+    readOnly: true, //是否只读  取值 true | false
   });
   // 监听内容变化
   genInsertResultEditor.value.onDidChangeModelContent((e) => {
