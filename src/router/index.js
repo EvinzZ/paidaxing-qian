@@ -130,6 +130,26 @@ export const constantRoutes = [
             }
         ]
     },
+    {
+        path: '/pinyin',
+        component: Layout,
+        redirect: 'noredirect',
+        meta: {title: '拼音工具', icon: 'code', affix: true, noCache: true },
+        children: [
+            {
+                path: 'getFirstLetter',
+                component: () => import('@/views/pinyin/getFirstLetter/index'),
+                name: 'getFirstLetter',
+                meta: {title: '获取汉字拼音首字母', icon: 'code', affix: true, noCache: true },
+            },
+            {
+                path: 'getPinyin',
+                component: () => import('@/views/pinyin/getPinyin/index'),
+                name: 'getPinyin',
+                meta: {title: '获取汉字拼音', icon: 'code', affix: true, noCache: true },
+            }
+        ]
+    },
 ]
 
 // 动态路由，基于用户权限动态去加载
