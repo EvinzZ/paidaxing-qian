@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import {getPinyin} from "@/api/pinyin";
+import {getPinyin} from "@/api/zifu";
 import {onMounted, ref, toRaw} from "vue";
 import * as monaco from "monaco-editor";
 

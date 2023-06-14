@@ -131,22 +131,34 @@ export const constantRoutes = [
         ]
     },
     {
-        path: '/pinyin',
+        path: '/zifu',
         component: Layout,
         redirect: 'noredirect',
-        meta: {title: '拼音工具', icon: 'code', affix: true, noCache: true },
+        meta: {title: '字符工具', icon: 'code', affix: true, noCache: true },
         children: [
             {
                 path: 'getFirstLetter',
-                component: () => import('@/views/pinyin/getFirstLetter/index'),
+                component: () => import('@/views/zifu/getFirstLetter/index'),
                 name: 'getFirstLetter',
-                meta: {title: '获取汉字拼音首字母', icon: 'code', affix: true, noCache: true },
+                meta: {title: '获取拼音首字母', icon: 'code', affix: true, noCache: true },
             },
             {
                 path: 'getPinyin',
-                component: () => import('@/views/pinyin/getPinyin/index'),
+                component: () => import('@/views/zifu/getPinyin/index'),
                 name: 'getPinyin',
-                meta: {title: '获取汉字拼音', icon: 'code', affix: true, noCache: true },
+                meta: {title: '获取拼音', icon: 'code', affix: true, noCache: true },
+            },
+            {
+                path: 'toCamelCase',
+                component: () => import('@/views/zifu/toCamelCase/index'),
+                name: 'toCamelCase',
+                meta: {title: '下划线转驼峰', icon: 'code', affix: true, noCache: true },
+            },
+            {
+                path: 'toUnderlineCase',
+                component: () => import('@/views/zifu/toUnderlineCase/index'),
+                name: 'toUnderlineCase',
+                meta: {title: '驼峰转下滑', icon: 'code', affix: true, noCache: true },
             }
         ]
     },

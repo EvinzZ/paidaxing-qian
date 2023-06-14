@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import {getFirstLetter} from "@/api/pinyin";
+import {getFirstLetter} from "@/api/zifu";
 import {onMounted, ref, toRaw} from "vue";
 import * as monaco from "monaco-editor";
 
