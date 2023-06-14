@@ -23,3 +23,15 @@ export function ddlGenEntity(data) {
         data: data
     })
 }
+
+// ddl语句生成updateById sql
+export function ddlGenUpdateSql(data) {
+    return request({
+        url: '/pgsql/ddlGenUpdateSql',
+        method: 'post',
+        headers: {
+            isToken: false
+        },
+        data: data
+    })
+}

@@ -123,6 +123,12 @@ export const constantRoutes = [
                 meta: {title: '生成Insert语句', icon: 'code', affix: true, noCache: true },
             },
             {
+                path: 'getUpdate',
+                component: () => import('@/views/pgsqls/getUpdate/index'),
+                name: 'getUpdate',
+                meta: {title: '生成updateById语句', icon: 'code', affix: true, noCache: true },
+            },
+            {
                 path: 'genEntity',
                 component: () => import('@/views/pgsqls/genEntity/index'),
                 name: 'genEntity',
