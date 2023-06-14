@@ -126,7 +126,7 @@ export const constantRoutes = [
                 path: 'getUpdate',
                 component: () => import('@/views/pgsqls/getUpdate/index'),
                 name: 'getUpdate',
-                meta: {title: '生成updateById语句', icon: 'code', affix: true, noCache: true },
+                meta: {title: '生成update语句', icon: 'code', affix: true, noCache: true },
             },
             {
                 path: 'genEntity',
