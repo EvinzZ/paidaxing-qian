@@ -18,7 +18,7 @@
 <!--          />-->
 <!--          <div style="margin: 20px 0"/>-->
 <!--        </el-form-item>-->
-        <el-form-item label="输出大小写" prop="upperCase">
+        <el-form-item label="输出结果大小写" prop="upperCase">
         <el-switch
             v-model="toUnderlineCaseForm.upperCase"
             class="mt-2"
